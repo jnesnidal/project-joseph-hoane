@@ -19,4 +19,4 @@ print()
 print("BOARD CONFIGURATION (start of game, from white's POV)")
 print("White is represented as UPPERCASE")
 print("Black is represented as lowercase")
-print(fish.get_board_visual(POV_WHITE)) # True for white's POV, False for black's POV
+print(fish.get_board_visual(POV_WHITE))
