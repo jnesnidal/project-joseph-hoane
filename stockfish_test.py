@@ -12,7 +12,7 @@ import stockfish
 fish = stockfish.Stockfish()
 
 # Set this variable to True for white's pov, False for black's POV
-POV_WHITE = False
+POV_WHITE = True
 
 print(fish.get_parameters())
 print()
