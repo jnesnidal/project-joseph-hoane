@@ -51,4 +51,49 @@ def castling_demo():
     print("After castling:")
     print(fish.get_board_visual(POV_WHITE))
 
-castling_demo()
+#castling_demo()
+
+
+def pawn_promotion_demo():
+    
+
+    fish = stockfish.Stockfish()
+    print(fish.get_board_visual(POV_WHITE))
+    
+
+   
+
+    moves = [
+        "b2b3",     
+        "g8f6",     
+        "c2c3",     
+        "f6g8",     
+        "b3b4", 
+        "g8f6",    
+        "c3c4",      
+        "f6g8",     
+        "b4b5",     
+        "g8f6",      
+        "c4c5",      
+        "f6g8",     
+        "c5c6",     
+        "b7c6",     
+        "b5b6",     
+        "c6c5",          
+        "b6b7" ,   
+        "b8c6",
+        "b7b8q",
+        
+        
+    ]
+
+    # Execute the entire move sequence.
+    fish.make_moves_from_current_position(moves)
+
+    print("Final board after simulation (white pawn promoted):")
+    print(fish.get_board_visual(POV_WHITE))
+
+
+
+
+pawn_promotion_demo()
