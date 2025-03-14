@@ -3,17 +3,13 @@
 import rospy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
-def move_ur10e():
-    # Initialize the ROS node
-    rospy.init_node('ur10e_commander', anonymous=True)
+def flip_and_move_chess_piece_farther():
+    rospy.init_node('ur10e_chess_piece_mover', anonymous=True)
     
-    # Define the topic for the joint trajectory controller
     pub = rospy.Publisher('/eff_joint_traj_controller/command', JointTrajectory, queue_size=10)
     
-    # Allow some time for the publisher to establish connection
     rospy.sleep(1)
     
-    # Create a JointTrajectory message
     traj = JointTrajectory()
     traj.joint_names = [
         'shoulder_pan_joint',
@@ -24,25 +20,38 @@ def move_ur10e():
         'wrist_3_joint'
     ]
 
-    # Create a JointTrajectoryPoint message
-    point = JointTrajectoryPoint()
-    point.positions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  # Target joint positions in radians
-    point.time_from_start = rospy.Duration(2.0)  # Duration to achieve the positions
 
-    # Add the point to the trajectory
-    traj.points.append(point)
+    point1 = JointTrajectoryPoint()
+    point1.positions = [3.14, -1.2, 1.0, -0.8, 0.0, 0.0]  # 180 degrees flip on the shoulder_pan_joint
+    point1.time_from_start = rospy.Duration(2.0)
 
-    # Publish the command to move the robot
-    rospy.loginfo("Sending joint trajectory command to UR10e...")
+    point2 = JointTrajectoryPoint()
+    point2.positions = [3.14, -1.5, 1.4, -1.0, 0.0, 0.0]
+    point2.time_from_start = rospy.Duration(4.0)
+
+    point3 = JointTrajectoryPoint()
+    point3.positions = [3.14, -1.3, 1.2, -0.8, 0.0, 0.0]
+    point3.time_from_start = rospy.Duration(6.0)
+
+    point4 = JointTrajectoryPoint()
+    point4.positions = [1.50, -1.3, 1.2, -0.8, 0.0, 0.0]  # Extended reach on the opposite side
+    point4.time_from_start = rospy.Duration(8.0)
+
+    point5 = JointTrajectoryPoint()
+    point5.positions = [2.50, -1.5, 2.4, -2.0, 0.0, 0.0]
+    point5.time_from_start = rospy.Duration(10.0)
+
+   
+
+    traj.points = [point1, point2, point3, point4, point5]
+
     pub.publish(traj)
 
-    # Keep the node running until the movement is complete
-    rospy.sleep(2)
-
-    rospy.loginfo("Movement complete.")
+    rospy.sleep(12)
+    rospy.loginfo("Chess piece moved successfully .")
 
 if __name__ == '__main__':
     try:
-        move_ur10e()
+        flip_and_move_chess_piece_farther()
     except rospy.ROSInterruptException:
         pass
